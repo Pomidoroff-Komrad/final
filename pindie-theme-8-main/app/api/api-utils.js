@@ -15,13 +15,6 @@ export const isResponseOk = (response) => {
   return !(response instanceof Error)
 }
 
-// const normalizeDataObject = (obj) => {   !!старое
-//   return {
-//     ...obj,
-//     category: obj.categories,
-//     users: obj.users_permissions_users,
-//   }
-// }
 const normalizeDataObject = (obj) => {
   let str = JSON.stringify(obj)
   

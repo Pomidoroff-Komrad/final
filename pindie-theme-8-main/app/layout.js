@@ -4,7 +4,7 @@ import './globals.css'
 
 export const metadata = {
   title: 'Pindie',
-  description: 'Портал инди-игр от студентов Яндекс Практикума',
+  description: 'Портал инди-игр от студентов Яндекс Практикума',
 }
 
 export default function RootLayout({ children }) {

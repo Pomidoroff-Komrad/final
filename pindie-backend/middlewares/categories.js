@@ -30,14 +30,14 @@ const updateCategory = async (req, res, next) =>{
 }
 const checkIsEmptyName = async (req, res, next) =>{
   if (!req.body.name){
-    res.status(400).send({ message: "Введите название категории"})
+    res.status(400).send(JSON.stringify({ message: "Введите название категории"}))
   } else {
     next();
   }
 }
 const deleteCategory = async (req, res, next) => {
   try{
-    req.category = await findByIdAndDelete(req.params.id);
+    req.categories = await categories.findByIdAndDelete(req.params.id);
     next();
   } catch(err){
     res.status(400).json({ message: 'Не удалось удалить категорию'})
@@ -56,4 +56,11 @@ const checkIsCategoryExists = async (req, res, next) => {
   }
 };
 
-module.exports = {findAllCategories, findCategoryById, createCategory, updateCategory, checkIsEmptyName, deleteCategory}; 
+module.exports = {findAllCategories,
+                 findCategoryById,
+                 createCategory,
+                 updateCategory,
+                 checkIsEmptyName,
+                 checkIsCategoryExists,
+                 deleteCategory,
+                }; 

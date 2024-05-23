@@ -1,5 +1,4 @@
 const games = require("../models/game");
-const { checkEmptyNameAndEmail } = require("./users");
 
 const findAllGames = async (req, res, next) =>{
     if(req.query["categories.name"]) { 
@@ -76,10 +75,34 @@ const checkEmptyFields = async (req, res, next) => {
       next();
     }
   };
+  const checkIsGameExists = async (req, res, next) => {
+    const isInArray = req.gamesArray.find((game) => {
+      return req.body.title === game.title;
+    });
+    if (isInArray) {
+      res.setHeader("Content-Type", "application/json");
+          res.status(400).send(JSON.stringify({ message: "Игра с таким названием уже существует" }));
+    } else {
+      next();
+    }
+  };
+  const checkIfUsersAreSafe = async (req, res, next) => {
+  if (!req.body.users) {
+    next();
+    return;
+  }
+  if (req.body.users.length - 1 === req.game.users.length) {
+    next();
+    return;
+  } else {
+    res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Нельзя удалять пользователей или добавлять больше одного пользователя" }));
+  }
+  }; 
 const checkIsVoteRequest = async (req, res, next) => {
   if (Object.keys(req.body).length === 1 && req.body.users) {
     req.isVoteRequest = true;
   }
   next();
 };
-module.exports = {findAllGames, findGameById, createGame, updateGame, deleteGame, checkEmptyFields, checkIfCategoriesAvaliable, checkIsVoteRequest};
+module.exports = {findAllGames, findGameById, createGame, updateGame, deleteGame, checkEmptyFields, checkIfCategoriesAvaliable, checkIsVoteRequest, checkIsGameExists, checkIfUsersAreSafe};

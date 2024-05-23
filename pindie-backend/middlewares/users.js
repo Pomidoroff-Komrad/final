@@ -54,6 +54,19 @@ const hashPassword = async (req, res, next) => {
     res.status(400).send({ message: "Ошибка хеширования пароля" });
   }
 }; 
+const filterPassword = (req, res, next) => {
+  const filterUser = (user) => {
+    const { password, ...userWithoutPassword } = user.toObject();
+    return userWithoutPassword;
+  };
+  if (req.user) {
+    req.user = filterUser(req.user);
+  }
+  if (req.usersArray) {
+    req.usersArray = req.usersArray.map((user) => filterUser(user));
+  }
+  next();
+};
 const checkIsUserExists = async (req, res, next) => {
   const isInArray = req.usersArray.find((user) => {
     return req.body.email === user.email;
@@ -66,4 +79,4 @@ const checkIsUserExists = async (req, res, next) => {
   }
 };
 
-module.exports = {findAllUsers, findUserById, createUser, updateUser, checkEmptyNameAndEmail, deleteUser, hashPassword, checkIsUserExists};
+module.exports = {findAllUsers, findUserById, createUser, updateUser, checkEmptyNameAndEmail, deleteUser, hashPassword, filterPassword, checkIsUserExists};
