@@ -4,6 +4,7 @@ const allowedCors = [
     'https://students-projects.ru',
     'http://localhost:3000',
     'http://localhost:3001/',
+    'https://frontend-pindie-nzi.nomoredomainswork.ru'
  
   ];
   function corse(req, res, next) {
