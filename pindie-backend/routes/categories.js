@@ -17,7 +17,9 @@ categoriesRouter.post(
 categoriesRouter.get('/categories/:id', findCategoryById, sendCategoryById)
 categoriesRouter.put(
                         '/categories/:id',
+                        findAllCategories,
                         checkIsEmptyName,
+                        checkIsCategoryExists,
                         checkAuth,
                         findCategoryById,
                         updateCategory,
