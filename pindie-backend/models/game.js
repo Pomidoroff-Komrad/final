@@ -6,6 +6,7 @@ const gameSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    unique: true,
   },
   description: {
     type: String,
@@ -46,5 +47,6 @@ gameSchema.statics.findGameByCategory = function(category) {
       return games.filter(game => game.categories.length > 0);
     });
 };
+
 
 module.exports = mongoose.model('game', gameSchema);
