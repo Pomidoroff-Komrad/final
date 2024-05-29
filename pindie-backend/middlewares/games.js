@@ -64,6 +64,7 @@ const checkEmptyFields = async (req, res, next) => {
     }
   };
   const checkIfCategoriesAvaliable = async (req, res, next) => {
+    console.log(req.isVoteRequest)
     if(req.isVoteRequest) {
         next();
         return;

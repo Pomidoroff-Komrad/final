@@ -19,11 +19,11 @@ gamesRouter.put(
                     "/games/:id",
                     findGameById,
                     findAllGames,
-                    checkIfCategoriesAvaliable,
                     checkIsVoteRequest,
+                    checkIfCategoriesAvaliable,
                     checkEmptyFields,
                     // checkIsGameExists, не надо
-                    checkUniqueTitle,
+                    checkUniqueTitle, //новый миддлвар
                     checkAuth,
                     updateGame,
                     sendUpdatedGame,

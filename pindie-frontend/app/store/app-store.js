@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getJWT, setJWT, removeJWT, getMe } from '../api/api-utils';
+import { getJWT, setJWT, removeJWT, getMe, isResponseOk } from '../api/api-utils';
 import { endpoints } from '../api/config';
 
 export const useStore = create((set) => ({
@@ -18,7 +18,7 @@ export const useStore = create((set) => ({
         const jwt = getJWT();
         if (jwt) {
             const user = await getMe(endpoints.me, jwt);
-            if (user) {
+            if (isResponseOk(user)) {
               set({ isAuth: true, user: { ...user, id: user._id }, token: jwt });
               setJWT(jwt);
             } else {
