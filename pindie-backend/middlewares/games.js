@@ -86,6 +86,27 @@ const checkEmptyFields = async (req, res, next) => {
       next();
     }
   };
+  const checkUniqueTitle = async (req, res, next) => {
+    try {
+      const { id } = req.params; 
+      const { title } = req.body; 
+  
+      const game = await games.findById(id);
+      if (game.title === title) {
+        return next();
+      }
+  
+      const existingGame = await games.findOne({ title });
+  
+      if (existingGame) {
+          return res.status(400).json({ error: 'Игра с таким названием уже существует' });
+      }
+      next();
+    } catch (error) {
+      console.error('Ошибка проверки уникальности названия игры:', error);
+      res.status(500).json({ error: 'Ошибка сервера' });
+    }
+  };
   const checkIfUsersAreSafe = async (req, res, next) => {
   if (!req.body.users) {
     next();
@@ -105,4 +126,4 @@ const checkIsVoteRequest = async (req, res, next) => {
   }
   next();
 };
-module.exports = {findAllGames, findGameById, createGame, updateGame, deleteGame, checkEmptyFields, checkIfCategoriesAvaliable, checkIsVoteRequest, checkIsGameExists, checkIfUsersAreSafe};
+module.exports = {findAllGames, findGameById, createGame, updateGame, deleteGame, checkEmptyFields, checkIfCategoriesAvaliable, checkIsVoteRequest, checkIsGameExists, checkIfUsersAreSafe, checkUniqueTitle};
